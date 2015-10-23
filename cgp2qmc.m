@@ -17,6 +17,7 @@ function [R,p0] = cgp2qmc(S_maj,S_min,theta,p0,fig)
 %OUTPUTS:
 %   R:  Quadratic matrix of ellipse (2x2 Matrix)
 %   p0: Ellipse center (2x1 Column Vector)
+
 %%
 
 if nargin == 4

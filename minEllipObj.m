@@ -17,7 +17,7 @@ function [ff,gg] = minEllipObj(xx,option)
 % OUTPUTS
 %   ff: The value of the objective function for the input ellipse xx
 %   gg: The gradient of the objective function for the input ellipse xx
-%
+
 %% Determine Input Option and Calulate Objective Function and Gradient
 if strcmp(option,'linear')
     ff = -(xx(1)*xx(2)-xx(3)^2);

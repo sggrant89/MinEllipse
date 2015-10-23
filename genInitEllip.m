@@ -13,7 +13,7 @@ function xx0 = genInitEllip(pp,fig)
 %
 % OUTPUTS
 %   xx0: The affine transform coefficients of the initial ellipse.
-%
+
 %% Parse Inputs
 if nargin == 1;
     fig = false;

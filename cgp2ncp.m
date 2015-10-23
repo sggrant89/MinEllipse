@@ -17,6 +17,7 @@ function c = cgp2ncp(S_maj,S_min,theta,p0,fig)
 %OUTPUTS:
 %   c: Row vector containing 6 polynomial coefficients of ellipse
 %       (1x6 Row Vector)
+
 %%
 
 if nargin == 4

@@ -18,6 +18,7 @@ function [A,bb] = cgp2axc(S_maj,S_min,theta,p0,fig)
 %OUTPUTS:
 %   A:   Affine transform matrix A of an ellipse (2x2 Matrix)
 %   bb:  Transformed center of ellipse (i.e. -A*p0) (2x1 Column Vector)
+
 %% 
 if nargin == 4
     fig = false;

@@ -18,6 +18,7 @@ function [S_maj,S_min,theta,p0] = axc2cgp(A,bb,fig)
 %           crossing
 %   theta: Ellipse heading (i.e. tilt) measured clockwise from vertical
 %   p0:    Ellipse center
+
 %%
 
 if nargin == 2

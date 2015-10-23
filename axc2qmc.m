@@ -13,6 +13,7 @@ function [R,p0] = axc2qmc(A,bb,fig)
 %OUTPUTS:
 %   R:  Quadratic matrix of ellipse (2x2 Matrix)
 %   p0: Ellipse center (2x1 Column Vector)
+
 %%
 if nargin == 2
     fig = false;

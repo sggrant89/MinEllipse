@@ -2,7 +2,7 @@ function draw(xx0,xx,pp)
 %% Read Me
 % draw(xx0,xx,pp) creates a figure of the initial ellipse, minimum area
 % ellipse and the set of points to be contained by the ellipses.
-%
+
 %% Map Initial Ellipse Parameters
 A(1,1) = xx0(1);
 A(2,2) = xx0(2);

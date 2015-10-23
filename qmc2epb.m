@@ -13,6 +13,7 @@ function v = qmc2epb(R,p0,N,fig)
 %OUTPUTS:
 %   v: N points describing vertices of N sided polygon indicating boundary
 %           of an ellipse. (2xN Matrix)
+
 %%
 
 if nargin == 3

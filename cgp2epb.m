@@ -17,6 +17,7 @@ function v = cgp2epb(S_maj,S_min,theta,p0,N,fig)
 %OUTPUTS:
 %   v: N points describing vertices of N sided polygon indicating boundary
 %           of an ellipse. (2xN Matrix)
+
 %%
 
 if nargin == 5

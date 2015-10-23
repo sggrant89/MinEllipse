@@ -13,6 +13,7 @@ function c = qmc2ncp(R,p0,fig)
 %OUTPUTS:
 %   c: Row vector containing 6 polynomial coefficients of ellipse
 %       (1x6 Row Vector)
+
 %%
 
 if nargin == 2

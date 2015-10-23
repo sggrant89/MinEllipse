@@ -15,7 +15,7 @@ function [cc,d1,grad_cc,d2] = ellipCon(xx,pp)
 %   d1:      Dummy empty matrix for input to fmincon
 %   grad_cc: The gradient of the constraints for the input ellipse xx
 %   d2:      Dummy empty matrix for input to fmincon
-%
+
 %% Assign Dummy Matrices as Empty
 d1 = [];
 d2 = [];
@@ -31,7 +31,7 @@ bb(2,1) = xx(5);
 %% Calculate the Constraint and Its Gradient for Each of the N points in pp
 cc = zeros(length(pp),1);
 grad_cc = zeros(length(xx),length(pp));
-for i = 1:length(pp)
+for i = 1:size(pp,1)
     cc(i) = norm(A*pp(i,:)'+bb,2)^2-1;
     grad_cc(1,i) = 2*pp(i,1)*(xx(1)*pp(i,1)+xx(3)*pp(i,2)+xx(4));
     grad_cc(2,i) = 2*pp(i,2)*(xx(2)*pp(i,2)+xx(3)*pp(i,1)+xx(5));

@@ -13,6 +13,7 @@ function [A,bb] = qmc2axc(R,p0,fig)
 %OUTPUTS:
 %   A:   Affine transform matrix A of an ellipse (2x2 Matrix)
 %   bb:  Transformed center of ellipse (i.e. -A*p0) (2x1 Column Vector)
+
 %%
 
 if nargin == 2

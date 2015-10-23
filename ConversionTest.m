@@ -1,4 +1,4 @@
-function [result_CGP,result_QMC,result_AXC] = ConversionTest(S_maj,S_min,theta,p0,save,filename)
+function [result_CGP,result_QMC,result_AXC,result_NCP] = ConversionTest(S_maj,S_min,theta,p0,save,filename)
 %% Read ME
 % ConversionTestAXC(S_maj,S_min,theta,p0,save,filename) tests all of the
 % elliptical conversion algorithms by converting from each form into all
@@ -28,7 +28,7 @@ function [result_CGP,result_QMC,result_AXC] = ConversionTest(S_maj,S_min,theta,p
 %   result_CGP: Cell containing results of CGP testing [Cell]
 %   result_QMC: Cell containing results of QMC testing [Cell]
 %   result_AXC: Cell containing results of AXC testing [Cell]
-%
+
 %% Parse Inputs
 if nargin == 4
     save = false;
@@ -52,9 +52,9 @@ if ~isscalar(S_maj)
         theta = theta*ones(size(S_maj));
     end
     if size(p0,2) == 1
-        p(1,:) = p0(1)*ones(size(S_maj));
-        p(2,:) = p0(2)*ones(size(S_maj));
-        p0 = p;clear p
+        z(1,:) = p0(1)*ones(size(S_maj));
+        z(2,:) = p0(2)*ones(size(S_maj));
+        p0 = z;clear z
     end
 end
 if ~isscalar(S_min)
@@ -105,6 +105,7 @@ end
 result_CGP = {};
 result_QMC = {};
 result_AXC = {};
+result_NCP = {};
 for i = 1:length(S_maj)
     clc
     fprintf('S_maj = %d\n',S_maj(i))
@@ -119,6 +120,9 @@ for i = 1:length(S_maj)
     
     [A,bb] = cgp2axc(S_maj(i),S_min(i),theta(i),p0(:,i));
     [result_AXC,f_axc] = testAXC(A,bb,result_AXC);
+    
+    c = cgp2ncp(S_maj(i),S_min(i),theta(i),p0(:,i));
+    [result_NCP,f_ncp] = testNCP(c,result_NCP);
     
     if ~f_cgp
         f = result_CGP([1 end-(4:-1:0)],:);
@@ -135,6 +139,11 @@ for i = 1:length(S_maj)
         f_str = [filename(1:(p-1)) '_axc.csv'];
         cell2csv(f_str,f);
     end
+    if ~f_ncp
+        f = result_NCP([1 end-(3:-1:0)],:);
+        f_str = [filename(1:(p-1)) '_ncp.csv'];
+        cell2csv(f_str,f);
+    end
     if ~f_cgp
         error('Failure in CGP. Results of failed test have been saved as csv.')
     end
@@ -144,6 +153,9 @@ for i = 1:length(S_maj)
     if ~f_axc
         error('Failure in AXC. Results of failed test have been saved as csv.')
     end
+    if ~f_ncp
+        error('Failure in NCP. Results of failed test have been saved as csv.')
+    end
 end
 
 if save
@@ -151,8 +163,10 @@ if save
     f_cgp = [filename(1:(p-1)) '_cgp.csv'];
     f_axc = [filename(1:(p-1)) '_axc.csv'];
     f_qmc = [filename(1:(p-1)) '_qmc.csv'];
+    f_ncp = [filename(1:(p-1)) '_ncp.csv'];
     cell2csv(f_cgp,result_CGP);
     cell2csv(f_axc,result_AXC);
     cell2csv(f_qmc,result_QMC);
+    cell2csv(f_ncp,result_NCP);
     fprintf('complete.\n')
 end
