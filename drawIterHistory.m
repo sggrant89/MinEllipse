@@ -14,7 +14,7 @@ figure
 for n = 1:size(h,1)
       draw(xx0,h(n,:),pp)
       drawnow
-      frame = getframe(1);
+      frame = getframe(gcf);
       im = frame2im(frame);
       [imind,cm] = rgb2ind(im,256);
       if n == 1;
