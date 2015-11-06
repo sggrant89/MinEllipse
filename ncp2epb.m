@@ -24,7 +24,7 @@ end
 v = qmc2epb(R,p0,N);
 
 if fig
-    plot(v(1,:),v(2,:),'-o')
+    plot(v(1,:),v(2,:))
     grid on
     m = max(v(:));
     xlim([-1.1*m 1.1*m]+p0(1))

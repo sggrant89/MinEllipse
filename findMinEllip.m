@@ -1,4 +1,4 @@
-function [xx,fval,exitflag,output,xx0] = findMinEllip(pp,obj,fig,iterHistory)
+function [xx,fval,exitflag,output,xx0] = findMinEllip(pp,rep,obj,fig,iterHistory)
 %% Read Me
 % xx = findMinEllip(pp,obj,fig) finds the minimum area ellipse that
 % contains all N points in the Nx2 matrix pp. It achieves this by
@@ -27,33 +27,38 @@ function [xx,fval,exitflag,output,xx0] = findMinEllip(pp,obj,fig,iterHistory)
 %   xx0:      The affine transform coefficients of the initial ellipse
 %
 %% Parse Inputs
-if nargin == 2
+if nargin == 3
     fig = false;
     iterHistory = false;
-elseif nargin == 3
+elseif nargin == 4
     iterHistory = false;
 end
 
 %% Generate Initial Ellipse
-xx0 = genInitEllip(pp);
+xx0 = genInitEllip(pp,rep);
 
 %% Set Bounds and Options
 lb= [0; 0; -Inf; -Inf; -Inf];
-ub= [Inf; Inf; Inf; Inf; Inf];
+ub= [Inf; Inf; sqrt(xx0(1)*xx0(2)); Inf; Inf];
 if iterHistory
     options= optimoptions('fmincon','GradObj','on','GradConstr', 'on',...
-                        'MaxIter',10000,'Display','off','OutputFcn',@outfun);
+                        'Display','off','OutputFcn',@outfun,'TolX',1e-20);
 else
     options= optimoptions('fmincon','GradObj','on','GradConstr', 'on',...
-                        'MaxIter',10000,'Display','off');
+                        'Display','off','TolX',1e-20);
 end
 
 %% Find Minimum Area Ellipse
-[xx,fval,exitflag,output] = fmincon(@(xx)minEllipObj(xx,obj), xx0, ...
-           [],[],[],[],lb,ub, @(xx)ellipCon(xx,pp), options);
+[xx,fval,exitflag,output] = fmincon(@(xx)minEllipObj(xx,obj), xx0,...
+           [],[],[],[],lb,ub, @(xx)ellipCon(xx,pp,rep), options);
 
 %% Draw Figure if Necessary
 if fig
-    draw(xx0,xx,pp);
+    draw(xx0,xx,pp,rep);
     legend('Initial Ellipse','Minimum Area Ellipse')
+end
+
+if iterHistory
+    load('iterHistory.mat')
+    drawIterHistory(xx0,h,pp,'test.gif')
 end

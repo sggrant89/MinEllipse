@@ -1,4 +1,4 @@
-function xx0 = genInitEllip(pp,fig)
+function xx0 = genInitEllip(pp,rep,fig)
 %% Read Me
 % xx0 = genInitEllip(pp,fig) finds generates the initial ellipse for
 % finding the minimum area ellipse containing a set of points. The initial
@@ -15,7 +15,7 @@ function xx0 = genInitEllip(pp,fig)
 %   xx0: The affine transform coefficients of the initial ellipse.
 
 %% Parse Inputs
-if nargin == 1;
+if nargin == 2;
     fig = false;
 end
 
@@ -33,15 +33,18 @@ k = (ymax+ymin)/2;
 theta = pi/2;
 p0 = [h;k];
 
-%% Convert Parameters to Affine Transform Coefficients
-[A,bb] = cgp2axc(S_maj,S_min,theta,p0,fig);
-
-%% Map Parameters
-xx0(1) = A(1,1);
-xx0(2) = A(2,2);
-xx0(3) = A(1,2);
-xx0(4) = bb(1);
-xx0(5) = bb(2);
+%% Convert Parameters to Appropriate Representation and Map Parameters
+if strcmp(rep,'axc')
+    [A,bb] = cgp2axc(S_maj,S_min,theta,p0,fig);
+    xx0(1) = A(1,1);
+    xx0(2) = A(2,2);
+    xx0(3) = A(1,2);
+    xx0(4) = bb(1);
+    xx0(5) = bb(2);
+elseif strcmp(rep,'ncp')
+    c = cgp2ncp(S_maj,S_min,theta,p0,fig);
+    xx0 = c(1:5);
+end
 
 %% Draw Figure if Necessary
 if fig

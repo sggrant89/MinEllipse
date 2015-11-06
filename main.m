@@ -4,25 +4,25 @@ clc
 commandwindow
 
 %% Enter User Inputs
-N = 80;
+N = 50;
 x_mu = 7;
 y_mu = 10;
-x_sigma = 30;
+x_sigma = 50;
 y_sigma = 26;
+theta = pi/4;
+rep = 'axc';
 obj = 'log';
 fig = true;
-iterHistory = true;
+iterHistory = false;
 
 %% Generate random set of points
-pp(:,1) = normrnd(x_mu,x_sigma,N,1);
-pp(:,2) = normrnd(y_mu,y_sigma,N,1);
+D = [ x_sigma^2 ,     0     ;...
+          0     , y_sigma^2];
+U = [cos(theta),-sin(theta);...
+     sin(theta), cos(theta)];
+sigma = U*D*U';
+          
+pp = mvnrnd([x_mu;y_mu],sigma,N);
 
 %% Find Minimum Area Ellipse
-[xx,fval,exitflag,output,xx0] = findMinEllip(pp,obj,fig,iterHistory);
-
-
-%% Create GIF of Iterations
-if iterHistory
-    load('iterHistory.mat')
-    drawIterHistory(xx0,h,pp,'test.gif')
-end
+[xx,fval,exitflag,output,xx0] = findMinEllip(pp,rep,obj,fig,iterHistory);
